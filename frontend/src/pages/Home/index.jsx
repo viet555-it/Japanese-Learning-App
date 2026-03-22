@@ -18,12 +18,12 @@ const HomePage = () => {
         <div className="bg-[#151515]/95 backdrop-blur-md px-10 py-12 rounded-t-xl rounded-b-sm flex flex-col items-center text-center shadow-lg border border-white/5">
           <div className="flex items-center gap-4 mb-5">
             <h1 className="text-4xl font-normal text-white tracking-wide">
-              Welcome to GoJapanese!
+              Welcome to GoJapan!
             </h1>
             <img src={logo} alt="GoJapan logo" className="w-[50px] h-[50px] rounded-full object-cover ml-2 shrink-0 shadow-[0_0_15px_rgba(191,29,44,0.6)]" />
           </div>
           <p className="text-xl text-[#b0b0b0] font-light leading-relaxed max-w-2xl">
-            GoJapanese is an aesthetic, community-made platform for learning Japanese inspired by Duolingo and Monkeytype.<br/>
+            GoJapan is an aesthetic, community-made platform for learning Japanese inspired by Duolingo and Monkeytype.<br/>
             To begin, pick a dojo below and start training now!
           </p>
         </div>
