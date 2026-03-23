@@ -95,3 +95,132 @@ export const getQuizzes = async (req, res) => {
         res.status(500).json({ message: error.message });
     }
 };
+
+/**
+ * Create a new Quiz wrapper
+ */
+export const createQuiz = async (req, res) => {
+    try {
+        const { quizTitle, difficulty } = req.body;
+        if (!quizTitle || !difficulty) {
+            return res.status(400).json({ message: "quizTitle and difficulty are required" });
+        }
+        const [result] = await db.query(
+            "INSERT INTO Quiz (QuizTitle, Difficulty) VALUES (?, ?)",
+            [quizTitle, difficulty]
+        );
+        res.status(201).json({ message: "Quiz created", quizId: result.insertId });
+    } catch (error) {
+        console.error("Error creating quiz:", error);
+        res.status(500).json({ message: error.message });
+    }
+};
+
+/**
+ * Update a Quiz
+ */
+export const updateQuiz = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const { quizTitle, difficulty } = req.body;
+        
+        let updateFields = [];
+        let params = [];
+        if (quizTitle) {
+            updateFields.push("QuizTitle = ?");
+            params.push(quizTitle);
+        }
+        if (difficulty) {
+            updateFields.push("Difficulty = ?");
+            params.push(difficulty);
+        }
+        
+        if (updateFields.length === 0) {
+            return res.status(400).json({ message: "No fields to update" });
+        }
+        
+        params.push(id);
+        const [result] = await db.query(
+            `UPDATE Quiz SET ${updateFields.join(", ")} WHERE QuizID = ?`,
+            params
+        );
+        
+        if (result.affectedRows === 0) {
+            return res.status(404).json({ message: "Quiz not found" });
+        }
+        
+        res.json({ message: "Quiz updated" });
+    } catch (error) {
+        console.error("Error updating quiz:", error);
+        res.status(500).json({ message: error.message });
+    }
+};
+
+/**
+ * Delete a Quiz
+ */
+export const deleteQuiz = async (req, res) => {
+    try {
+        const { id } = req.params;
+        
+        // Explicitly clear quiz items first to avoid relation issues if fk is not cascading
+        await db.query("DELETE FROM Quiz_Items WHERE QuizID = ?", [id]);
+        
+        const [result] = await db.query("DELETE FROM Quiz WHERE QuizID = ?", [id]);
+        if (result.affectedRows === 0) {
+            return res.status(404).json({ message: "Quiz not found" });
+        }
+        
+        res.json({ message: "Quiz deleted" });
+    } catch (error) {
+        console.error("Error deleting quiz:", error);
+        res.status(500).json({ message: error.message });
+    }
+};
+
+/**
+ * Bulk add items (Vocab, Kanji, Kana) to a Quiz
+ */
+export const addQuizItems = async (req, res) => {
+    try {
+        const { quizId } = req.params;
+        const { vocabIds, kanjiIds, kanaIds } = req.body;
+        
+        if (!vocabIds && !kanjiIds && !kanaIds) {
+            return res.status(400).json({ message: "No items provided to add" });
+        }
+        
+        const connection = await db.getConnection();
+        try {
+            await connection.beginTransaction();
+            
+            if (vocabIds && Array.isArray(vocabIds)) {
+                for (const id of vocabIds) {
+                    await connection.query("INSERT INTO Quiz_Items (QuizID, VocabID) VALUES (?, ?)", [quizId, id]);
+                }
+            }
+            if (kanjiIds && Array.isArray(kanjiIds)) {
+                for (const id of kanjiIds) {
+                    await connection.query("INSERT INTO Quiz_Items (QuizID, KanjiID) VALUES (?, ?)", [quizId, id]);
+                }
+            }
+            if (kanaIds && Array.isArray(kanaIds)) {
+                for (const id of kanaIds) {
+                    await connection.query("INSERT INTO Quiz_Items (QuizID, KanaID) VALUES (?, ?)", [quizId, id]);
+                }
+            }
+            
+            await connection.commit();
+            res.status(201).json({ message: "Quiz items added successfully" });
+        } catch (error) {
+            await connection.rollback();
+            throw error;
+        } finally {
+            connection.release();
+        }
+        
+    } catch (error) {
+        console.error("Error adding quiz items:", error);
+        res.status(500).json({ message: error.message });
+    }
+};
