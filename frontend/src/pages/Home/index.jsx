@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import ModeCard from "../../components/common/ModeCard";
 import bgImage from "../../assets/images/kanji-bg.png";
 import logo from "../../assets/images/logo.png";
@@ -21,10 +22,25 @@ const HomePage = () => {
               Welcome to GoJapan!
             </h1>
             <img src={logo} alt="GoJapan logo" className="w-[50px] h-[50px] rounded-full object-cover ml-2 shrink-0 shadow-[0_0_15px_rgba(191,29,44,0.6)]" />
+            
+            <div className="flex items-center gap-3 ml-4">
+              <Link 
+                to="/login"
+                className="text-sm font-bold text-[#999] hover:text-white uppercase tracking-widest transition-all px-4 py-2 border border-white/5 hover:border-white/20 rounded-lg bg-white/5 hover:bg-white/10"
+              >
+                Sign In
+              </Link>
+              <Link 
+                to="/register"
+                className="text-sm font-bold text-black uppercase tracking-widest px-4 py-2 bg-white rounded-lg hover:bg-gray-200 transition-all shadow-[0_0_15px_rgba(255,255,255,0.2)] active:scale-95"
+              >
+                Sign Up
+              </Link>
+            </div>
           </div>
           <p className="text-xl text-[#b0b0b0] font-light leading-relaxed max-w-2xl">
             GoJapan is an aesthetic, community-made platform for learning Japanese inspired by Duolingo and Monkeytype.<br/>
-            To begin, pick a dojo below and start training now!
+            To begin, pick a dojo below and start demo training now!
           </p>
         </div>
 

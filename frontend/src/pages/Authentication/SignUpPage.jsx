@@ -1,0 +1,145 @@
+import React, { useState } from 'react';
+import { Eye, EyeOff, ArrowLeft } from 'lucide-react';
+import { useNavigate, Link } from 'react-router-dom';
+import logo from '../../assets/images/logo.png';
+
+export default function SignUpPage() {
+  const [showPassword, setShowPassword] = useState(false);
+  const [form, setForm] = useState({ name: '', email: '', password: '' });
+  const navigate = useNavigate();
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // TODO: gọi API đăng ký
+    console.log(form);
+  };
+
+  return (
+    <div className="min-h-screen bg-black flex flex-col relative overflow-hidden">
+      
+      {/* Background decoration elements */}
+      <div className="absolute top-[-15%] left-[-10%] w-[50%] h-[50%] bg-red-900/10 blur-[130px] rounded-full" />
+      <div className="absolute bottom-[0%] right-[-10%] w-[45%] h-[45%] bg-blue-900/10 blur-[130px] rounded-full" />
+
+      {/* Back button */}
+      <button 
+        onClick={() => navigate('/')}
+        className="absolute top-8 left-8 flex items-center gap-2 text-[#555] hover:text-white transition-colors group z-20"
+      >
+        <ArrowLeft size={18} className="group-hover:-translate-x-1 transition-transform" />
+        <span className="text-sm font-medium uppercase tracking-widest">Return</span>
+      </button>
+
+      {/* Main Container */}
+      <div className="flex-1 flex items-center justify-center px-4 py-12 z-10">
+        <div className="w-full max-w-[440px] bg-[#141414]/80 backdrop-blur-xl rounded-[32px] border border-white/5 px-10 py-10 shadow-2xl">
+
+          {/* Logo Section */}
+          <div className="flex items-center justify-center gap-3 mb-10">
+            <div className="relative">
+               <div className="absolute inset-0 bg-red-600/30 blur-lg rounded-full" />
+               <img src={logo} alt="GoJapan" className="w-11 h-11 rounded-full object-cover relative z-10 border border-white/10" />
+            </div>
+            <span className="text-[26px] font-bold text-white tracking-wide">GoJapan</span>
+          </div>
+
+          {/* Heading */}
+          <div className="text-center mb-10">
+            <h1 className="text-[40px] font-bold text-white mb-3 tracking-tighter">Join the GoJapan</h1>
+            <p className="text-[#666] text-[16px] max-w-[300px] mx-auto leading-relaxed">Master Japanese with precision and a focused community.</p>
+          </div>
+
+          {/* Form */}
+          <form onSubmit={handleSubmit} className="space-y-6">
+
+            {/* Name */}
+            <div>
+              <label className="block text-[11px] font-black text-[#555] uppercase tracking-[0.25em] mb-3 ml-2">
+                Identity / Name
+              </label>
+              <input
+                type="text"
+                placeholder="Genji Shimada"
+                value={form.name}
+                onChange={e => setForm({ ...form, name: e.target.value })}
+                className="w-full bg-white/[0.03] border border-white/5 rounded-2xl px-6 py-4.5 text-white text-[16px] placeholder-[#333] focus:outline-none focus:border-white/20 focus:bg-[#1a1a1a] transition-all"
+              />
+            </div>
+
+            {/* Email */}
+            <div>
+              <label className="block text-[11px] font-black text-[#555] uppercase tracking-[0.25em] mb-3 ml-2">
+                Digital / Email
+              </label>
+              <input
+                type="email"
+                placeholder="mastery@gojapan.jp"
+                value={form.email}
+                onChange={e => setForm({ ...form, email: e.target.value })}
+                className="w-full bg-white/[0.03] border border-white/5 rounded-2xl px-6 py-4.5 text-white text-[16px] placeholder-[#333] focus:outline-none focus:border-white/20 focus:bg-[#1a1a1a] transition-all"
+              />
+            </div>
+
+            {/* Password */}
+            <div>
+              <label className="block text-[11px] font-black text-[#555] uppercase tracking-[0.25em] mb-3 ml-2">
+                Security / Hidden
+              </label>
+              <div className="relative">
+                <input
+                  type={showPassword ? 'text' : 'password'}
+                  placeholder="••••••••"
+                  value={form.password}
+                  onChange={e => setForm({ ...form, password: e.target.value })}
+                  className="w-full bg-white/[0.03] border border-white/5 rounded-2xl px-6 py-4.5 pr-14 text-white text-[16px] placeholder-[#333] focus:outline-none focus:border-white/20 focus:bg-[#1a1a1a] transition-all"
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute right-6 top-1/2 -translate-y-1/2 text-[#444] hover:text-white transition-colors"
+                >
+                  {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+                </button>
+              </div>
+            </div>
+
+            {/* Submit */}
+            <button
+              type="submit"
+              className="w-full bg-white text-black font-black text-[17px] py-5 rounded-2xl hover:bg-gray-100 active:scale-[0.98] transition-all hover:shadow-[0_0_25px_rgba(255,255,255,0.1)] uppercase tracking-[0.2em] mt-2"
+            >
+              Sign up
+            </button>
+          </form>
+
+          {/* Social Access */}
+          <div className="grid grid-cols-2 gap-4 mt-8">
+             <button className="flex items-center justify-center gap-2 bg-[#1a1a1a] border border-white/5 py-4 rounded-2xl hover:bg-[#222] transition-all group">
+                <span className="text-[12px] font-bold text-[#666] group-hover:text-white transition-colors tracking-widest uppercase">Google</span>
+             </button>
+             <button className="flex items-center justify-center gap-2 bg-[#1a1a1a] border border-white/5 py-4 rounded-2xl hover:bg-[#222] transition-all group">
+                <span className="text-[12px] font-bold text-[#666] group-hover:text-white transition-colors tracking-widest uppercase">Facebook</span>
+             </button>
+          </div>
+
+          {/* Redirect */}
+          <div className="mt-10 text-center">
+            <p className="text-[#444] text-[13px] font-bold uppercase tracking-widest">
+              Already a member?{' '}
+              <Link to="/login" className="text-white hover:text-red-500 transition-colors ml-1">
+                Login here
+              </Link>
+            </p>
+          </div>
+
+        </div>
+      </div>
+
+      {/* Footer */}
+      <footer className="px-10 py-8 flex flex-col items-center justify-center gap-2">
+        <span className="text-[10px] text-white/10 uppercase font-black tracking-[1.2em] text-center ml-[1.2em]">GoJapan Excellence</span>
+      </footer>
+
+    </div>
+  );
+}
