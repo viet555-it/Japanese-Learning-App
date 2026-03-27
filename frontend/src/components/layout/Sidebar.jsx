@@ -18,14 +18,14 @@ const Sidebar = () => {
     <aside className="w-[280px] h-screen bg-black text-white flex flex-col pt-7 px-5 border-r border-white/15 shrink-0">
 
       {/* Logo */}
-      <div className="flex items-center gap-4 mb-6 pl-1">
+      <Link to="/" className="flex items-center gap-4 mb-6 pl-1 hover:opacity-80 transition-opacity">
         <img
           src={logo}
           alt="GoJapan logo"
           className="w-[56px] h-[56px] rounded-full object-cover shrink-0"
         />
         <span className="text-[28px] font-bold tracking-wide text-white leading-tight">GoJapan</span>
-      </div>
+      </Link>
 
 
       {/* Nav */}

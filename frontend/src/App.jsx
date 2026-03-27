@@ -1,4 +1,4 @@
-import { Routes, Route, useLocation } from "react-router-dom";
+import { Routes, Route, useLocation, Navigate } from "react-router-dom";
 import MainLayout from "./components/layout/MainLayout";
 import HomePage from "./pages/Home";
 import Kana from "./pages/Kana";
@@ -7,6 +7,45 @@ import Kanji from "./pages/Kanji";
 import ProgressPage from './pages/Progress/index.jsx';
 import LoginPage from "./pages/Authentication/LoginPage";
 import SignUpPage from "./pages/Authentication/SignUpPage";
+import { useAuth } from "./context/AuthContext";
+
+// Route wrapper: redirect to login if not authenticated
+function ProtectedRoute({ children }) {
+  const { isAuthenticated, loading } = useAuth();
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-black flex items-center justify-center">
+        <div className="w-8 h-8 border-2 border-white/20 border-t-white rounded-full animate-spin" />
+      </div>
+    );
+  }
+
+  if (!isAuthenticated) {
+    return <Navigate to="/login" replace />;
+  }
+
+  return children;
+}
+
+// Route wrapper: redirect to app if already authenticated
+function GuestRoute({ children }) {
+  const { isAuthenticated, loading } = useAuth();
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-black flex items-center justify-center">
+        <div className="w-8 h-8 border-2 border-white/20 border-t-white rounded-full animate-spin" />
+      </div>
+    );
+  }
+
+  if (isAuthenticated) {
+    return <Navigate to="/" replace />;
+  }
+
+  return children;
+}
 
 function App() {
   const location = useLocation();
@@ -24,21 +63,23 @@ function App() {
   if (isAuth) {
     return (
       <Routes>
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/register" element={<SignUpPage />} />
+        <Route path="/login" element={<GuestRoute><LoginPage /></GuestRoute>} />
+        <Route path="/register" element={<GuestRoute><SignUpPage /></GuestRoute>} />
       </Routes>
     );
   }
 
   return (
-    <MainLayout>
-      <Routes>
-        <Route path="/kana" element={<Kana />} />
-        <Route path="/vocab" element={<Vocab />} />
-        <Route path="/kanji" element={<Kanji />} />
-        <Route path="/progress" element={<ProgressPage />} />
-      </Routes>
-    </MainLayout>
+    <ProtectedRoute>
+      <MainLayout>
+        <Routes>
+          <Route path="/kana" element={<Kana />} />
+          <Route path="/vocab" element={<Vocab />} />
+          <Route path="/kanji" element={<Kanji />} />
+          <Route path="/progress" element={<ProgressPage />} />
+        </Routes>
+      </MainLayout>
+    </ProtectedRoute>
   );
 }
 

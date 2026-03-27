@@ -1,17 +1,37 @@
 import React, { useState } from 'react';
-import { Eye, EyeOff, ArrowLeft } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
+import { Eye, EyeOff, ArrowLeft, Loader2 } from 'lucide-react';
+import { useNavigate, Link } from 'react-router-dom';
+import { useAuth } from '../../context/AuthContext';
 import logo from '../../assets/images/logo.png';
 
 export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false);
   const [form, setForm] = useState({ email: '', password: '' });
+  const [error, setError] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
+  const { login } = useAuth();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // TODO: gọi API đăng nhập
-    console.log(form);
+    setError('');
+
+    if (!form.email || !form.password) {
+      setError('Please fill in all fields.');
+      return;
+    }
+
+    setIsLoading(true);
+    try {
+      await login({ email: form.email, password: form.password });
+      navigate('/'); // Redirect to home page after login
+    } catch (err) {
+      const message =
+        err.response?.data?.message || 'Login failed. Please try again.';
+      setError(message);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -36,18 +56,27 @@ export default function LoginPage() {
 
           {/* Logo Section */}
           <div className="flex items-center justify-center gap-3 mb-8">
-            <div className="relative">
-               <div className="absolute inset-0 bg-red-600/20 blur-md rounded-full" />
-               <img src={logo} alt="GoJapan" className="w-10 h-10 rounded-full object-cover relative z-10 border border-white/10" />
-            </div>
-            <span className="text-[24px] font-bold text-white tracking-wide">GoJapan</span>
+            <Link to="/" className="flex items-center gap-3 hover:opacity-80 transition-all">
+              <div className="relative">
+                 <div className="absolute inset-0 bg-red-600/20 blur-md rounded-full" />
+                 <img src={logo} alt="GoJapan" className="w-10 h-10 rounded-full object-cover relative z-10 border border-white/10" />
+              </div>
+              <span className="text-[24px] font-bold text-white tracking-wide">GoJapan</span>
+            </Link>
           </div>
 
           {/* Heading */}
           <div className="text-center mb-8">
-            <h1 className="text-[36px] font-bold text-white mb-2 tracking-tight">Welcome Back</h1>
+            <h1 className="text-[36px] font-bold text-white mb-2 tracking-tight">Sign In</h1>
             <p className="text-[#666] text-[15px]">Focus your mind. Continue your journey.</p>
           </div>
+
+          {/* Error Message */}
+          {error && (
+            <div className="mb-6 px-4 py-3 rounded-xl bg-red-500/10 border border-red-500/20 text-red-400 text-[14px] text-center animate-[fadeIn_0.3s_ease]">
+              {error}
+            </div>
+          )}
 
           {/* Form */}
           <form onSubmit={handleSubmit} className="space-y-6">
@@ -63,6 +92,7 @@ export default function LoginPage() {
                 value={form.email}
                 onChange={e => setForm({ ...form, email: e.target.value })}
                 className="w-full bg-[#1e1e1e]/50 border border-white/5 rounded-2xl px-5 py-4 text-white text-[16px] placeholder-[#444] focus:outline-none focus:border-white/20 focus:bg-[#222] transition-all"
+                disabled={isLoading}
               />
             </div>
 
@@ -81,6 +111,7 @@ export default function LoginPage() {
                   value={form.password}
                   onChange={e => setForm({ ...form, password: e.target.value })}
                   className="w-full bg-[#1e1e1e]/50 border border-white/5 rounded-2xl px-5 py-4 pr-12 text-white text-[16px] placeholder-[#444] focus:outline-none focus:border-white/20 focus:bg-[#222] transition-all"
+                  disabled={isLoading}
                 />
                 <button
                   type="button"
@@ -95,9 +126,17 @@ export default function LoginPage() {
             {/* Submit */}
             <button
               type="submit"
-              className="w-full bg-white text-black font-black text-[16px] py-4 rounded-2xl hover:bg-gray-100 active:scale-[0.98] transition-all hover:shadow-[0_0_20px_rgba(255,255,255,0.15)] uppercase tracking-widest"
+              disabled={isLoading}
+              className="w-full bg-white text-black font-black text-[16px] py-4 rounded-2xl hover:bg-gray-100 active:scale-[0.98] transition-all hover:shadow-[0_0_20px_rgba(255,255,255,0.15)] uppercase tracking-widest disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
             >
-              Enter GoJapan
+              {isLoading ? (
+                <>
+                  <Loader2 size={18} className="animate-spin" />
+                  Signing in...
+                </>
+              ) : (
+                'Enter GoJapan'
+              )}
             </button>
           </form>
 
