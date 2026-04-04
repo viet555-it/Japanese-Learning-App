@@ -178,7 +178,7 @@ export default function VocabularyPage() {
         {/* Quick Select Button */}
         <button
           onClick={handleQuickSelect}
-          className="w-full flex items-center justify-center gap-2 py-4 rounded-xl bg-gradient-to-b from-[#b0b0b0] to-[#999] text-black text-[15px] font-bold shadow-[0_4px_0_rgba(120,120,120,1)] active:shadow-[0_0px_0_rgba(120,120,120,1)] active:translate-y-1 transition-all"
+          className="w-full flex items-center justify-center gap-2 py-4 bg-white text-black opacity-80 hover:opacity-100 text-[15px]"
         >
           <MousePointer2 size={16} className="fill-black" />
           Quick Select
@@ -222,21 +222,21 @@ export default function VocabularyPage() {
         <div className="max-w-7xl mx-auto flex gap-4">
           <button 
             onClick={() => handleStart('blitz')}
-            className="flex-1 max-w-[200px] flex items-center justify-center gap-2 py-4 rounded-xl bg-gradient-to-b from-[#b0b0b0] to-[#999] text-black text-[15px] font-bold shadow-[0_4px_0_rgba(120,120,120,1)] active:shadow-[0_0px_0_rgba(120,120,120,1)] active:translate-y-1 transition-all"
+            className="flex-1 max-w-[200px] flex items-center justify-center gap-2 py-4 bg-white text-black opacity-80 hover:opacity-100 text-[15px]"
           >
             <Zap size={18} className="fill-black" />
             Blitz
           </button>
           <button 
             onClick={() => handleStart('gauntlet')}
-            className="flex-1 max-w-[200px] flex items-center justify-center gap-2 py-4 rounded-xl bg-gradient-to-b from-[#b0b0b0] to-[#999] text-black text-[15px] font-bold shadow-[0_4px_0_rgba(120,120,120,1)] active:shadow-[0_0px_0_rgba(120,120,120,1)] active:translate-y-1 transition-all"
+            className="flex-1 max-w-[200px] flex items-center justify-center gap-2 py-4 bg-white text-black opacity-80 hover:opacity-100 text-[15px]"
           >
             <Sword size={18} className="fill-black" />
             Gauntlet
           </button>
           <button 
             onClick={() => handleStart('classic')}
-            className="flex-1 flex items-center justify-center gap-2 py-4 rounded-xl bg-gradient-to-b from-white to-[#f0f0f0] text-black text-[18px] font-bold shadow-[0_4px_0_rgba(200,200,200,1)] active:shadow-[0_0px_0_rgba(200,200,200,1)] active:translate-y-1 transition-all"
+            className="flex-1 flex items-center justify-center gap-2 py-4 bg-white text-black text-[18px]"
           >
             <Play size={20} className="fill-black" />
             Classic

@@ -9,7 +9,7 @@ const HomePage = () => {
   const { isAuthenticated, logout } = useAuth();
   return (
     <div
-      className="min-h-full h-full w-full bg-cover flex items-center justify-center relative bg-fixed"
+      className="min-h-screen w-full bg-cover flex items-center justify-center relative bg-fixed transition-all"
       style={{ backgroundImage: `url(${bgImage})` }}
     >
       {/* Dark Overlay */}

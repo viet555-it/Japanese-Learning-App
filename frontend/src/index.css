@@ -1,10 +1,177 @@
 @import "tailwindcss";
 
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&family=Zen+Maru+Gothic:wght@400;700&family=Kiwi+Maru:wght@400;500&family=DotGothic16&display=swap');
+
 @layer base {
   html, body, #root {
     height: 100%;
-    font-family: 'Inter', sans-serif;
+    margin: 0;
+    padding: 0;
   }
+}
+
+/* Custom Fonts mapped to classes */
+.font-sans { font-family: 'Inter', sans-serif; }
+.font-zen { font-family: 'Zen Maru Gothic', sans-serif; }
+.font-kiwi { font-family: 'Kiwi Maru', serif; }
+.font-dot { font-family: 'DotGothic16', sans-serif; }
+
+/* Theming System Variables */
+:root {
+  --bg-color: #111111;
+  --bg-glass: rgba(17, 17, 17, 0.6);
+  --text-color: #ffffff;
+  --accent-color: #ff3333;
+}
+
+:root.light {
+  --bg-color: #f5f5f5;
+  --bg-glass: rgba(245, 245, 245, 0.6);
+  --text-color: #111111;
+  --accent-color: #ff0000;
+}
+
+:root.sapphire-bloom {
+  --bg-color: #080d1c;
+  --bg-glass: rgba(8, 13, 28, 0.7);
+  --text-color: #cbe6ff;
+  --accent-color: #4361ee;
+}
+
+:root.sakura-pink {
+  --bg-color: #fce4ec;
+  --bg-glass: rgba(252, 228, 236, 0.7);
+  --text-color: #880e4f;
+  --accent-color: #f06292;
+}
+
+:root.emerald-forest {
+  --bg-color: #0d1b10;
+  --bg-glass: rgba(13, 27, 16, 0.7);
+  --text-color: #a7f3d0;
+  --accent-color: #10b981;
+}
+
+:root.temple-mist {
+  --bg-color: #0d1717;
+  --bg-glass: rgba(13, 23, 23, 0.7);
+  --text-color: #8ce1d5;
+  --accent-color: #8ce1d5;
+}
+
+:root.monkeytype {
+  --bg-color: #323437;
+  --bg-glass: rgba(50, 52, 55, 0.7);
+  --text-color: #d1d0c5;
+  --accent-color: #e2b714;
+}
+
+:root.moonlit-bay {
+  --bg-color: #0f1626;
+  --bg-glass: rgba(15, 22, 38, 0.7);
+  --text-color: #abcbff;
+  --accent-color: #abcbff;
+}
+
+:root.vending-glow {
+  --bg-color: #14051a;
+  --bg-glass: rgba(20, 5, 26, 0.7);
+  --text-color: #eb77ff;
+  --accent-color: #eb77ff;
+}
+
+/* Force Global Fonts Overrides */
+html.font-zen *, body.font-zen * { font-family: 'Zen Maru Gothic', sans-serif !important; }
+html.font-kiwi *, body.font-kiwi * { font-family: 'Kiwi Maru', serif !important; }
+html.font-dot *, body.font-dot * { font-family: 'DotGothic16', sans-serif !important; }
+
+/* Force Global Colors Overrides (Universally maps rigid Tailwind blocks to theme vars) */
+.theme-container, .theme-card { background-color: var(--bg-glass) !important; color: var(--text-color) !important; }
+
+/* Solid flat styling for absolute seamless integration when no wallpaper */
+/* Root elements keep the pure theme color */
+html:not(.has-custom-bg) .bg-black, 
+html:not(.has-custom-bg) .min-h-screen { 
+  background-color: var(--bg-color) !important; 
+}
+
+/* Inner containers (Vocab units, Kana rows) get slightly lighter to stand out naturally against any theme */
+html:not(.has-custom-bg) .bg-\[\#1f1f1f\], 
+html:not(.has-custom-bg) .bg-\[\#111\] { 
+  background-color: rgba(255, 255, 255, 0.04) !important; 
+  border: 1px solid rgba(255, 255, 255, 0.03) !important;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.2) !important;
+  border-radius: 1rem;
+}
+
+/* All primary action buttons globally adapt to the Theme's Accent color with a Monkeytype 3D pill feel */
+html .bg-white.text-black {
+  background-color: var(--accent-color) !important;
+  color: var(--bg-color) !important;
+  box-shadow: 0 5px 0 rgba(0, 0, 0, 0.4) !important;
+  border-radius: 1.25rem !important;
+  border: none !important;
+  font-weight: 800 !important;
+  transition: all 0.15s ease !important;
+}
+
+html .bg-white.text-black:active {
+  box-shadow: 0 0 0 rgba(0, 0, 0, 0.4) !important;
+  transform: translateY(5px) !important;
+}
+
+/* Inactive Toggle Buttons for Settings */
+.btn-inactive {
+  background-color: rgba(255, 255, 255, 0.04);
+  color: var(--text-color);
+  box-shadow: 0 5px 0 rgba(0, 0, 0, 0.15);
+  border-radius: 1.25rem;
+  font-weight: 600;
+  transition: all 0.15s ease;
+  border: 1px solid rgba(255, 255, 255, 0.02);
+}
+.btn-inactive:hover {
+  background-color: rgba(255, 255, 255, 0.08);
+}
+.btn-inactive:active {
+  box-shadow: 0 0 0 rgba(0, 0, 0, 0.15);
+  transform: translateY(5px);
+}
+
+/* Enhancements for when custom vivid background is active to prevent text/buttons from bleeding out */
+html.has-custom-bg .btn-inactive {
+  background-color: rgba(0, 0, 0, 0.5) !important;
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}
+html.has-custom-bg .btn-inactive:hover {
+  background-color: rgba(0, 0, 0, 0.7) !important;
+}
+
+html .text-white, html .text-\[\#e5e5e5\] { 
+  color: var(--text-color) !important; 
+}
+
+/* Custom Wallpaper Glassmorphism Enhancements */
+html.has-custom-bg .bg-black, 
+html.has-custom-bg .bg-\[\#1f1f1f\], 
+html.has-custom-bg .bg-\[\#111\],
+html.has-custom-bg .theme-container {
+    background-color: rgba(10, 10, 10, 0.45) !important; /* Elegant translucent dark glass */
+    backdrop-filter: blur(16px) !important; /* Premium heavy blur behind components */
+}
+
+/* Strip structural background so the custom wallpaper spans perfectly evenly across the layout */
+html.has-custom-bg .min-h-screen:not(.global-bg-overlay) {
+    background-color: transparent !important;
+    backdrop-filter: none !important;
+}
+
+/* Seamless Sidebar when wallpaper is active */
+html.has-custom-bg aside.theme-container {
+    background-color: transparent !important;
+    backdrop-filter: none !important;
+    border-right-color: transparent !important;
 }
 
 @layer utilities {

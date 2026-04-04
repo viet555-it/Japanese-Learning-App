@@ -8,6 +8,8 @@ import ProgressPage from './pages/Progress/index.jsx';
 import LoginPage from "./pages/Authentication/LoginPage";
 import SignUpPage from "./pages/Authentication/SignUpPage";
 import { useAuth } from "./context/AuthContext";
+import GlobalEffects from "./components/effects/GlobalEffects";
+import PreferencesPage from "./pages/Preferences/PreferencesPage";
 
 // Training Pages
 import TrainingSetup from "./pages/Training/TrainingSetup";
@@ -52,7 +54,7 @@ function GuestRoute({ children }) {
   return children;
 }
 
-function App() {
+function AppContent() {
   const location = useLocation();
   const isHome = location.pathname === "/";
   const isAuth = location.pathname === "/login" || location.pathname === "/register";
@@ -82,6 +84,7 @@ function App() {
           <Route path="/vocab" element={<Vocab />} />
           <Route path="/kanji" element={<Kanji />} />
           <Route path="/progress" element={<ProgressPage />} />
+          <Route path="/preferences" element={<PreferencesPage />} />
           
           {/* New Training Routes */}
           <Route path="/training/setup" element={<TrainingSetup />} />
@@ -90,6 +93,15 @@ function App() {
         </Routes>
       </MainLayout>
     </ProtectedRoute>
+  );
+}
+
+function App() {
+  return (
+    <>
+      <GlobalEffects />
+      <AppContent />
+    </>
   );
 }
 
