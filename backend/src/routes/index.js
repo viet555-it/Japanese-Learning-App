@@ -4,6 +4,7 @@ import contentRoutes from './contentRoutes.js';
 import progressRoutes from './progressRoutes.js';
 import questionRoutes from './questionRoutes.js';
 import sessionRoutes from './sessionRoutes.js';
+import feedbackRoutes from './feedbackRoutes.js';
 
 const router = express.Router();
 
@@ -13,5 +14,6 @@ router.use('/questions', questionRoutes);
 router.use('/sessions', sessionRoutes);
 router.use('/progress', progressRoutes);
 router.use('/', contentRoutes); // contentRoutes contains root paths like /lessons, /kana, /kanji, /vocab
+router.use('/feedback', feedbackRoutes);
 
 export default router;

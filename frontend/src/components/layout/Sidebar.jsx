@@ -1,6 +1,6 @@
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Home, Star, Settings } from "lucide-react";
+import { Home, Star, Settings, MessageSquare } from "lucide-react";
 import logo from "../../assets/images/logo.png";
 
 const navItems = [
@@ -9,7 +9,8 @@ const navItems = [
   { name: "Kana",       path: "/kana",     icon: <span className="text-[22px] leading-none">あ</span> },
   { name: "Vocabulary", path: "/vocab",    icon: <span className="text-[22px] leading-none">語</span> },
   { name: "Kanji",      path: "/kanji",    icon: <span className="text-[22px] leading-none">字</span> },
-  { name: "Preferences",path: "/preferences",icon: <Settings size={24} strokeWidth={1.5} /> },
+  { name: "Preferences", path: "/preferences", icon: <Settings size={24} strokeWidth={1.5} /> },
+  { name: "Feedback",    path: "/feedback",    icon: <MessageSquare size={24} strokeWidth={1.5} /> },
 ];
 
 const Sidebar = () => {

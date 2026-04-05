@@ -10,6 +10,7 @@ import SignUpPage from "./pages/Authentication/SignUpPage";
 import { useAuth } from "./context/AuthContext";
 import GlobalEffects from "./components/effects/GlobalEffects";
 import PreferencesPage from "./pages/Preferences/PreferencesPage";
+import FeedbackPage from "./pages/Feedback/FeedbackPage";
 
 // Training Pages
 import TrainingSetup from "./pages/Training/TrainingSetup";
@@ -85,6 +86,7 @@ function AppContent() {
           <Route path="/kanji" element={<Kanji />} />
           <Route path="/progress" element={<ProgressPage />} />
           <Route path="/preferences" element={<PreferencesPage />} />
+          <Route path="/feedback" element={<FeedbackPage />} />
           
           {/* New Training Routes */}
           <Route path="/training/setup" element={<TrainingSetup />} />
