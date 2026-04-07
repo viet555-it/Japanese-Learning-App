@@ -33,8 +33,8 @@ export const getFeedbacks = async (req, res) => {
                 f.image_data,
                 f.upvotes,
                 f.created_at,
-                COALESCE(u.DisplayName, u.Username, 'Anonymous') AS author_name,
-                u.Avatar AS author_avatar
+                COALESCE(u.Username, 'Anonymous') AS author_name,
+                NULL AS author_avatar
             FROM feedback f
             LEFT JOIN user u ON f.user_id = u.UserID
             ORDER BY f.created_at DESC
