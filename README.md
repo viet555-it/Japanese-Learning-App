@@ -17,6 +17,7 @@
 | 🏆 **Achievements** | 12 unlock-able achievements with XP and rarity system |
 | 💬 **Feedback** | Community feedback board with upvote and image upload |
 | 🎨 **Preferences** | Themes, wallpapers, fonts, cursor effects, BGM |
+| 🤖 **AI Chatbot** | Intelligent assistant (Groq API) answering Japanese queries |
 | 📱 **Responsive** | Fully mobile-responsive with hamburger sidebar drawer |
 
 ---
@@ -42,6 +43,7 @@
 | **bcrypt** | Password hashing |
 | **jsonwebtoken** | Access + Refresh token auth |
 | **google-auth-library** | Google token verification |
+| **axios** | HTTP client for external APIs (Groq) |
 | **dotenv** | Environment configuration |
 | **nodemon** | Dev hot-reload |
 
@@ -159,8 +161,9 @@ DB_PORT=3306
 JWT_SECRET=your_access_token_secret
 JWT_REFRESH_SECRET=your_refresh_token_secret
 
-# OAuth
+# OAuth & External APIs
 GOOGLE_CLIENT_ID=your_google_client_id
+GROQ_API_KEY=your_groq_api_key
 ```
 
 Seed the database (optional but recommended):
@@ -218,7 +221,7 @@ All endpoints are prefixed with `/api`.
 | `GET` | `/auth/profile` | ✅ | Get current user profile |
 | `PUT` | `/auth/profile` | ✅ | Update user profile |
 
-### Content — `/api`
+### Content & Chat — `/api`
 | Method | Endpoint | Description |
 |---|---|---|
 | `GET` | `/lessons` | Get all lessons (filterable by `?level=N5&type=Vocabulary`) |
@@ -226,6 +229,8 @@ All endpoints are prefixed with `/api`.
 | `GET` | `/vocab` | Get vocabulary (filterable by `?lessonId=1`) |
 | `GET` | `/kanji` | Get kanji (filterable by `?lessonId=1`) |
 | `GET` | `/kana` | Get all kana characters |
+| `GET` | `/chat/history` | Get user's chat history |
+| `POST` | `/chat` | Send message to AI chatbot |
 
 ### Quiz & Questions — `/api/questions`
 | Method | Endpoint | Description |

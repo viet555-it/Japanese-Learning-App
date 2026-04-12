@@ -31,6 +31,18 @@ db.query(`
     )
 `).catch(err => console.error("Feedback table init error:", err));
 
+// Initialize chat history table if not exists
+db.query(`
+    CREATE TABLE IF NOT EXISTS chat_messages (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        user_id INT NOT NULL,
+        role ENUM('user', 'model') NOT NULL,
+        content TEXT NOT NULL,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        FOREIGN KEY (user_id) REFERENCES user(UserID) ON DELETE CASCADE
+    )
+`).catch(err => console.error("Chat table init error:", err));
+
 import routes from './routes/index.js';
 import { errorHandler } from './middlewares/errorHandler.js';
 
