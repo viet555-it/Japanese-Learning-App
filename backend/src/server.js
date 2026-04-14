@@ -8,46 +8,54 @@ dotenv.config();
 import db from './config/db.js';
 import { initializeIndexes } from './config/add_indexes.js';
 
-// Initialize performance indexes first
-initializeIndexes();
+const initDatabase = async () => {
+    try {
+        await initializeIndexes();
 
-// Khởi tạo bảng login history (nếu chưa có) cho tính năng Visit Calendar
-db.query(`
-    CREATE TABLE IF NOT EXISTS user_login_history (
-        ID INT AUTO_INCREMENT PRIMARY KEY,
-        UserID INT NOT NULL,
-        LoginDate DATE NOT NULL,
-        UNIQUE KEY unique_user_date (UserID, LoginDate),
-        FOREIGN KEY (UserID) REFERENCES user(UserID) ON DELETE CASCADE
-    )
-`).catch(err => console.error("Table init error:", err));
+        // Khởi tạo bảng login history (nếu chưa có) cho tính năng Visit Calendar
+        await db.query(`
+            CREATE TABLE IF NOT EXISTS user_login_history (
+                ID INT AUTO_INCREMENT PRIMARY KEY,
+                UserID INT NOT NULL,
+                LoginDate DATE NOT NULL,
+                UNIQUE KEY unique_user_date (UserID, LoginDate),
+                FOREIGN KEY (UserID) REFERENCES user(UserID) ON DELETE CASCADE
+            )
+        `);
 
-// Initialize feedback table if not exists
-db.query(`
-    CREATE TABLE IF NOT EXISTS feedback (
-        id INT AUTO_INCREMENT PRIMARY KEY,
-        user_id INT,
-        rating VARCHAR(20) NOT NULL,
-        category VARCHAR(100) NOT NULL,
-        description TEXT NOT NULL,
-        image_data LONGTEXT,
-        upvotes INT DEFAULT 0,
-        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-        FOREIGN KEY (user_id) REFERENCES user(UserID) ON DELETE SET NULL
-    )
-`).catch(err => console.error("Feedback table init error:", err));
+        // Initialize feedback table if not exists
+        await db.query(`
+            CREATE TABLE IF NOT EXISTS feedback (
+                id INT AUTO_INCREMENT PRIMARY KEY,
+                user_id INT,
+                rating VARCHAR(20) NOT NULL,
+                category VARCHAR(100) NOT NULL,
+                description TEXT NOT NULL,
+                image_data LONGTEXT,
+                upvotes INT DEFAULT 0,
+                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                FOREIGN KEY (user_id) REFERENCES user(UserID) ON DELETE SET NULL
+            )
+        `);
 
-// Initialize chat history table if not exists
-db.query(`
-    CREATE TABLE IF NOT EXISTS chat_messages (
-        id INT AUTO_INCREMENT PRIMARY KEY,
-        user_id INT NOT NULL,
-        role ENUM('user', 'model') NOT NULL,
-        content TEXT NOT NULL,
-        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-        FOREIGN KEY (user_id) REFERENCES user(UserID) ON DELETE CASCADE
-    )
-`).catch(err => console.error("Chat table init error:", err));
+        // Initialize chat history table if not exists
+        await db.query(`
+            CREATE TABLE IF NOT EXISTS chat_messages (
+                id INT AUTO_INCREMENT PRIMARY KEY,
+                user_id INT NOT NULL,
+                role ENUM('user', 'model') NOT NULL,
+                content TEXT NOT NULL,
+                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                FOREIGN KEY (user_id) REFERENCES user(UserID) ON DELETE CASCADE
+            )
+        `);
+        console.log("Database initialized successfully.");
+    } catch (err) {
+        console.error("Database initialization error:", err.message);
+    }
+};
+
+initDatabase();
 
 import routes from './routes/index.js';
 import { errorHandler } from './middlewares/errorHandler.js';
