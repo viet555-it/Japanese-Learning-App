@@ -9,7 +9,7 @@ WORKDIR /app
 COPY package*.json ./
 
 # Cài đặt dependencies (dùng install thay cho ci nếu lockfile bị xung đột môi trường)
-RUN npm install --production
+RUN npm install --production --legacy-peer-deps
 
 # Copy source code
 COPY src/ ./src/
