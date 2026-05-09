@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import ModeCard from "../../components/common/ModeCard";
 import bgImage from "../../assets/images/kanji-bg.png";
 import logo from "../../assets/images/logo.png";
@@ -32,6 +32,7 @@ const HomePage = () => {
   const { isAuthenticated, logout } = useAuth();
   const { preferences, updatePreference } = usePreferences();
   const [scrolled, setScrolled] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -137,7 +138,7 @@ const HomePage = () => {
 
           <div className="flex flex-col sm:flex-row items-center gap-4 sm:gap-6 w-full sm:w-auto animate-fade-in-up" style={{ animationDelay: '300ms' }}>
             <button 
-              onClick={scrollToDojos}
+              onClick={() => navigate('/kana')}
               className="w-full sm:w-auto px-8 py-4 text-sm font-bold uppercase tracking-widest rounded-xl transition-all shadow-lg active:scale-95 flex items-center justify-center gap-3"
               style={{ backgroundColor: 'var(--text-color)', color: 'var(--bg-color)' }}
             >

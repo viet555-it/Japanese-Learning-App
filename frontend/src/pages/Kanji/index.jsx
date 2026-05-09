@@ -190,9 +190,9 @@ export default function KanjiPage() {
             >
               <div className="flex items-center gap-2 mb-1">
                 <span className="text-[16px] font-bold">{unit.label}</span>
-                <span className={`text-[10px] font-black px-1.5 py-0.5 rounded flex items-center justify-center ${
-                  activeUnitId === unit.id ? 'bg-[#666] text-white' : 'bg-[#333] text-[#aaa]'
-                }`}>{unit.badge}</span>
+                <span className="unit-badge-container text-[10px] font-black px-1.5 py-0.5 rounded flex items-center justify-center">
+                  {unit.badge}
+                </span>
               </div>
               <span className={`text-[12px] ${activeUnitId === unit.id ? 'text-[#555]' : 'text-[#666]'}`}>
                 {unit.range}

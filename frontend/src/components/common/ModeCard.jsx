@@ -12,8 +12,8 @@ const ModeCard = ({ japanese, title, path, borderRight }) => {
          onClick={() => navigate(path)}
     >
       <div className="flex items-center gap-4">
-        <span className="text-2xl font-normal text-[#e5e5e5]">{japanese}</span>
-        <span className="text-2xl font-light tracking-wide text-[#e5e5e5]">{title}</span>
+        <span className="text-2xl font-normal" style={{ color: 'var(--text-color)' }}>{japanese}</span>
+        <span className="text-2xl font-light tracking-wide" style={{ color: 'var(--text-color)' }}>{title}</span>
       </div>
     </div>
   );

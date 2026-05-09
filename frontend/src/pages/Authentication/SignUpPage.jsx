@@ -108,13 +108,13 @@ export default function SignUpPage() {
                  <div className="absolute inset-0 bg-red-600/30 blur-lg rounded-full" />
                  <img src={logo} alt="GoJapan" className="w-11 h-11 rounded-full object-cover relative z-10 border border-white/10" />
               </div>
-              <span className="text-[26px] font-bold text-white tracking-wide">GoJapan</span>
+              <span className="text-[26px] font-bold tracking-wide" style={{ color: 'var(--text-color)' }}>GoJapan</span>
             </Link>
           </div>
 
           {/* Heading */}
           <div className="text-center mb-10">
-            <h1 className="text-[40px] font-bold text-white mb-3 tracking-tighter">Join the GoJapan</h1>
+            <h1 className="text-[40px] font-bold mb-3 tracking-tighter" style={{ color: 'var(--text-color)' }}>Join the GoJapan</h1>
             <p className="text-[#666] text-[16px] max-w-[300px] mx-auto leading-relaxed">Master Japanese with precision and a focused community.</p>
           </div>
 
@@ -146,7 +146,8 @@ export default function SignUpPage() {
                 placeholder="Genji Shimada"
                 value={form.name}
                 onChange={e => setForm({ ...form, name: e.target.value })}
-                className="w-full bg-white/[0.03] border border-white/5 rounded-2xl px-6 py-4.5 text-white text-[16px] placeholder-[#333] focus:outline-none focus:border-white/20 focus:bg-[#1a1a1a] transition-all"
+                className="w-full bg-white/[0.03] border border-white/5 rounded-2xl px-6 py-4.5 text-[16px] placeholder-[#333] focus:outline-none focus:border-white/20 focus:bg-[#1a1a1a] transition-all"
+                style={{ color: 'var(--text-color)' }}
                 disabled={isLoading}
               />
             </div>
@@ -161,7 +162,8 @@ export default function SignUpPage() {
                 placeholder="mastery@gojapan.jp"
                 value={form.email}
                 onChange={e => setForm({ ...form, email: e.target.value })}
-                className="w-full bg-white/[0.03] border border-white/5 rounded-2xl px-6 py-4.5 text-white text-[16px] placeholder-[#333] focus:outline-none focus:border-white/20 focus:bg-[#1a1a1a] transition-all"
+                className="w-full bg-white/[0.03] border border-white/5 rounded-2xl px-6 py-4.5 text-[16px] placeholder-[#333] focus:outline-none focus:border-white/20 focus:bg-[#1a1a1a] transition-all"
+                style={{ color: 'var(--text-color)' }}
                 disabled={isLoading}
               />
             </div>
@@ -177,7 +179,8 @@ export default function SignUpPage() {
                   placeholder="••••••••"
                   value={form.password}
                   onChange={e => setForm({ ...form, password: e.target.value })}
-                  className="w-full bg-white/[0.03] border border-white/5 rounded-2xl px-6 py-4.5 pr-14 text-white text-[16px] placeholder-[#333] focus:outline-none focus:border-white/20 focus:bg-[#1a1a1a] transition-all"
+                  className="w-full bg-white/[0.03] border border-white/5 rounded-2xl px-6 py-4.5 pr-14 text-[16px] placeholder-[#333] focus:outline-none focus:border-white/20 focus:bg-[#1a1a1a] transition-all"
+                  style={{ color: 'var(--text-color)' }}
                   disabled={isLoading}
                 />
                 <button
@@ -240,7 +243,7 @@ export default function SignUpPage() {
           <div className="mt-10 text-center">
             <p className="text-[#444] text-[13px] font-bold uppercase tracking-widest">
               Already a member?{' '}
-              <Link to="/login" className="text-white hover:text-red-500 transition-colors ml-1">
+              <Link to="/login" className="hover:text-red-500 transition-colors ml-1" style={{ color: 'var(--text-color)' }}>
                 Login here
               </Link>
             </p>
