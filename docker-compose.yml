@@ -29,6 +29,10 @@ services:
     build:
       context: ./frontend
       dockerfile: Dockerfile
+      args:
+        - VITE_GOOGLE_CLIENT_ID=${GOOGLE_CLIENT_ID}
+        - VITE_API_URL=https://gojapan.abc-xyz.tech/api
+        - VITE_FB_APP_ID=${VITE_FB_APP_ID}
     container_name: gojapanese_frontend
     restart: unless-stopped
     ports:
